@@ -78,28 +78,26 @@ Shader "MyShader/MagicCircleShader"
 					float edge2 = edge3 - 1;
 
 
+					float mask = (noise.r + edge) / 3;
+					float mask2 = ((1 - noise.r) + edge) / 3;
+
 					float max = (_EdgeWidth + 1) * _Amount;
 					float min = max - _EdgeWidth;
-					hardEdge = 1-smoothstep(min,max, edge3/2);
+					hardEdge = 1-smoothstep(min,max, mask);
 
 
-					float mask = (noise.r + edge) / 3;
-					float mask2 = ((1-noise.r) + edge) / 3;
-
-					float cutOff = step(_Amount, mask ) ;
+					float cutOff = 1-hardEdge;// step(_Amount, mask);
 
 
-					hardEdge = 1-step(_Amount, mask2 );
-
-
+					//hardEdge = 1-step(_Amount, mask2 );
 
 
 
 
 
 					//if (x+y > 0.2 && x-y < 0.3 && x - y > -0.2 && x + y < 1.5)a = 1;
-					if (x + y > 1.5)a = 1;
-					else a = 0;
+					//if (x + y > 1.5)a = 1;
+					//else a = 0;
 					
 					
 					//if (edge2 >= -_Amount+0.01 && edge2 < _Amount)discard;
@@ -110,7 +108,7 @@ Shader "MyShader/MagicCircleShader"
 
 					
 
-					return lerp(mainTex,_Color,hardEdge);
+					return lerp(mainTex, effectTex,hardEdge);
 			}
 			ENDCG
 		}

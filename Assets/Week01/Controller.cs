@@ -19,7 +19,7 @@ public class Controller : MonoBehaviour
         
         if (mat != null)
         {
-            time = Mathf.Abs(Mathf.Sin(time));
+            time = Mathf.Abs(Mathf.Sin(time/2));
             mat.SetFloat("_Amount",time);
         }
     }
